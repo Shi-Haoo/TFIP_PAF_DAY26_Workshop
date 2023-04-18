@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,17 @@ public class BoardGameRestController {
     @GetMapping(path="/games", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getGamesByOffsetAndLimit(@RequestParam(required = false, defaultValue = "0") int offset, @RequestParam(required = false, defaultValue = "25") int limit){
         List<Game> gamesRetrieved = svc.getGamesByLimitAndOffset(limit, offset);
+        Games gamesList = new Games(limit, offset, LocalDateTime.now(), gamesRetrieved);
+        
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(gamesList.toJson().toString());
+    }
+
+    @GetMapping(path="/games/rank", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGamesByRank(@RequestParam(required = false, defaultValue = "0") int offset, @RequestParam(required = false, defaultValue = "25") int limit){
+        List<Game> gamesRetrieved = svc.getGamesByRank(limit, offset, Direction.ASC, "ranking");
         Games gamesList = new Games(limit, offset, LocalDateTime.now(), gamesRetrieved);
         
         return ResponseEntity
