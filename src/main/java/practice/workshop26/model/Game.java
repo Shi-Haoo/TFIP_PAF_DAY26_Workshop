@@ -114,7 +114,7 @@ public class Game {
                 .build();
     } 
 
-    public JsonObject toJsonForGetGamesByLimitAndOffset(){
+    public JsonObject toJsonByLimitAndOffset(){
         
         return Json.createObjectBuilder()
                 .add("game_id", this.getGid())
