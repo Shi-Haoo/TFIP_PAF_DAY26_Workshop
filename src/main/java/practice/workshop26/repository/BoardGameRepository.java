@@ -1,8 +1,10 @@
 package practice.workshop26.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -38,6 +40,12 @@ public class BoardGameRepository {
                                                          .map(d -> Game.convertFromDocument(d))
                                                          .toList();
                                                     
+    }
+
+    public Optional<Document> getGamesByObjectId(String id){
+        ObjectId objectId = new ObjectId(id);
+
+        return Optional.ofNullable(template.findById(objectId, Document.class, "games"));
     }
 
 }

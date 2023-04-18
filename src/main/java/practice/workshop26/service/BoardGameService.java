@@ -28,4 +28,13 @@ public class BoardGameService {
 
 
     }
+
+    public Game getGamesByObjectId(String objectId){
+
+        if(repo.getGamesByObjectId(objectId).get().isEmpty()){
+            return null;
+        }
+
+        return Game.convertFromDocument(repo.getGamesByObjectId(objectId).get());
+    }
 }

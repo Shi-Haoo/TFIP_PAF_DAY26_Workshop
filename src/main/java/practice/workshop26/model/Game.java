@@ -109,7 +109,7 @@ public class Game {
                 .add("ranking", this.getRanking())
                 .add("users_rated", this.getUsers_rated())
                 .add("url", this.getUrl())
-                .add("image", this.getImage())
+                .add("thumbnail", this.getImage())
                 .add("timestamp", LocalDateTime.now().toString())
                 .build();
     } 
