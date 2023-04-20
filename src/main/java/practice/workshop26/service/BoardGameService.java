@@ -1,6 +1,7 @@
 package practice.workshop26.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
@@ -37,4 +38,10 @@ public class BoardGameService {
 
         return Game.convertFromDocument(repo.getGamesByObjectId(objectId).get());
     }
+
+    
+    public Optional<Game> getGamesById(String id){
+        return repo.getGamesById(id);
+    }
+
 }

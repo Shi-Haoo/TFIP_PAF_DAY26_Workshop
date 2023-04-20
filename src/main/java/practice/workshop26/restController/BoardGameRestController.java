@@ -2,6 +2,7 @@ package practice.workshop26.restController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort.Direction;
@@ -46,7 +47,8 @@ public class BoardGameRestController {
                 .body(gamesList.toJson().toString());
     }
 
-    @GetMapping(path="/game/{objectId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //Get Game by Object id
+    @GetMapping(path="/gameOid/{objectId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getGamesByObjectId(@PathVariable String objectId){
 
         Game game = null;
@@ -74,5 +76,26 @@ public class BoardGameRestController {
                           .toString());
         
     }
+
+    //Get Game by gid or Object Id
+    @GetMapping(path = "game/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGamesById(@PathVariable String id){
+
+        Optional<Game> game = svc.getGamesById(id);
+
+        if(game.isEmpty()){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("Error Message: " + "Game with this gid or _id is not found");
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(game.get().toJson().toString());
+
+    }
+
 
 }
